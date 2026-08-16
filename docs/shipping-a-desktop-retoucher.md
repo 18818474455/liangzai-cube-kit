@@ -49,6 +49,7 @@ const pixels = applyCubeToRgba8(parseCube(cubeText), graded, 0.8)
 
 - 包：https://www.npmjs.com/package/liangzai-cube-kit
 - 仓：https://github.com/18818474455/liangzai-cube-kit
+- 产品总览：https://github.com/18818474455/liangzai
 
 完整软件在官网下载试用。私有化部署和二次开发，加微信 `cylbaw`。
 

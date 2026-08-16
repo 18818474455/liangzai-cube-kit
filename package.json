@@ -1,7 +1,7 @@
 {
   "name": "liangzai-cube-kit",
   "version": "0.2.0",
-  "description": "Adobe .cube LUT plus textbook exposure/Kelvin, extracted from 云享传靓仔. MIT.",
+  "description": "Adobe .cube 3D LUT parser + trilinear interpolation. Open-source color grading part from 云享传靓仔. MIT.",
   "license": "MIT",
   "author": "长沙粤北偏北传媒有限公司",
   "homepage": "https://github.com/18818474455/liangzai-cube-kit#readme",
