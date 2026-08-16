@@ -2,13 +2,13 @@
 
 liangzai-cube-kit 是一个开源的 **Adobe `.cube` LUT** 工具：解析标准 **3D LUT 颜色查找表**，用 **三线性插值** 套 LUT，适合「LUT 怎么用、批量套 LUT、滤镜预览」这类调色零件。一行命令看前后对比，一行代码读表、混合、写回。
 
-本仓库只开 **通用标准技术**（`.cube` 读写、插值、教科书级曝光 / 色温），不含美颜模型、不含产品风格配方。完整桌面修图产品见 [云享传靓仔总览](https://github.com/18818474455/liangzai)。
+本仓库只开 **通用标准技术**（`.cube` 读写、插值、教科书级曝光 / 色温），不含美颜模型、不含产品风格配方。完整产品见 [云享传靓仔 · 活动摄影修图美颜软件](https://github.com/18818474455/liangzai)。
 
 [![npm](https://img.shields.io/npm/v/liangzai-cube-kit.svg)](https://www.npmjs.com/package/liangzai-cube-kit)
 [![license](https://img.shields.io/github/license/18818474455/liangzai-cube-kit.svg)](./LICENSE)
 [![CI](https://github.com/18818474455/liangzai-cube-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/18818474455/liangzai-cube-kit/actions/workflows/ci.yml)
 
-[在线试跑](https://18818474455.github.io/liangzai-cube-kit/) · [npm](https://www.npmjs.com/package/liangzai-cube-kit) · [产品总览](https://github.com/18818474455/liangzai)
+[在线试跑](https://18818474455.github.io/liangzai-cube-kit/) · [npm](https://www.npmjs.com/package/liangzai-cube-kit) · [云享传靓仔修图美颜软件](https://github.com/18818474455/liangzai)
 
 ![Warm demo LUT before / after](docs/before-after.gif)
 
@@ -65,7 +65,7 @@ https://18818474455.github.io/liangzai-cube-kit/
 
 | 仓库 | 说明 |
 |------|------|
-| [liangzai](https://github.com/18818474455/liangzai) | 产品总览 + 技术架构 + 开闭源声明 |
+| [liangzai](https://github.com/18818474455/liangzai) | 云享传靓仔 · 活动摄影修图美颜软件（产品总览） |
 | [liangzai-plugin-sdk](https://github.com/18818474455/liangzai-plugin-sdk) | 插件类型与 Hello 示例（正式 App 不加载） |
 | [liangzai-cube-kit](https://github.com/18818474455/liangzai-cube-kit) | 本仓库 |
 
