@@ -1,0 +1,24 @@
+{
+  "name": "liangzai-cube-kit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "标准 Adobe .cube 读写与线性混合。云享传靓仔零件，不是完整产品。商务微信 cylbaw。",
+  "license": "MIT",
+  "author": "长沙粤北偏北传媒有限公司",
+  "homepage": "https://www.ybpbyxc.com",
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes tsx src/cli.ts",
+    "test": "npx --yes tsx --test src/cube.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.1",
+    "@types/pngjs": "^6.0.5",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.3"
+  }
+}
