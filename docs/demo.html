@@ -1,45 +1,5 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>liangzai-cube-kit demo</title>
-<style>
-  body { font-family: sans-serif; margin: 24px; max-width: 960px; }
-  canvas { max-width: 100%; border: 1px solid #ddd; }
-  label { display: block; margin: 12px 0; }
-</style>
-<h1>liangzai-cube-kit</h1>
-<p>从云享传靓仔管线中抽出的标准 .cube 工具，MIT 授权。本地先 <code>npm run build</code>，再用静态服务器打开本页。</p>
-<label>图片 <input id="image" type="file" accept="image/*"></label>
-<label>强度 <input id="intensity" type="range" min="0" max="1" step="0.01" value="0.8"></label>
-<canvas id="view" width="480" height="270"></canvas>
-<p>微信 cylbaw · <a href="https://www.ybpbyxc.com">ybpbyxc.com</a></p>
-<script type="module">
-  import { applyCubeToRgba8, warmDemoCube } from '../dist/index.js'
-
-  const canvas = document.getElementById('view')
-  const ctx = canvas.getContext('2d')
-  const cube = warmDemoCube(5)
-  let source
-
-  function redraw() {
-    if (!source) return
-    const intensity = Number(document.getElementById('intensity').value)
-    const { data, width, height } = source
-    const out = applyCubeToRgba8(cube, data, intensity)
-    const image = new ImageData(new Uint8ClampedArray(out), width, height)
-    canvas.width = width
-    canvas.height = height
-    ctx.putImageData(image, 0, 0)
-  }
-
-  document.getElementById('image').addEventListener('change', async (event) => {
-    const file = event.target.files?.[0]
-    if (!file) return
-    const bitmap = await createImageBitmap(file)
-    const off = new OffscreenCanvas(bitmap.width, bitmap.height)
-    const octx = off.getContext('2d')
-    octx.drawImage(bitmap, 0, 0)
-    source = octx.getImageData(0, 0, bitmap.width, bitmap.height)
-    redraw()
-  })
-  document.getElementById('intensity').addEventListener('input', redraw)
-</script>
+<meta http-equiv="refresh" content="0; url=./">
+<p><a href="./">打开 playground</a></p>

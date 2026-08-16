@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>liangzai-cube-kit playground</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      background: #07080a;
+      color: #e8edf2;
+    }
+    main { max-width: 960px; margin: 0 auto; padding: 32px 20px 64px; }
+    h1 { font-size: 1.6rem; margin: 0 0 8px; }
+    p { color: #9aa6b2; line-height: 1.6; }
+    a { color: #7ee0c6; }
+    .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin: 20px 0; }
+    label { display: flex; gap: 8px; align-items: center; }
+    canvas {
+      width: 100%;
+      max-width: 720px;
+      border-radius: 12px;
+      background: #111;
+      display: block;
+    }
+    input[type="range"] { width: 180px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>liangzai-cube-kit</h1>
+    <p>标准 Adobe .cube 三线性插值。拖一张图进来，拖强度看效果。从云享传靓仔管线抽出，MIT 授权。</p>
+    <div class="row">
+      <label>图片 <input id="image" type="file" accept="image/*"></label>
+      <label>强度 <input id="intensity" type="range" min="0" max="1" step="0.01" value="0.8"> <span id="iv">0.80</span></label>
+    </div>
+    <canvas id="view" width="480" height="270"></canvas>
+    <p>
+      <a href="https://www.npmjs.com/package/liangzai-cube-kit">npm</a>
+      · <a href="https://github.com/18818474455/liangzai-cube-kit">GitHub</a>
+      · 微信 cylbaw
+      · <a href="https://www.ybpbyxc.com">官网</a>
+    </p>
+  </main>
+  <script type="module">
+    import { applyCubeToRgba8, warmDemoCube } from 'https://esm.sh/liangzai-cube-kit@0.2.0'
+
+    const canvas = document.getElementById('view')
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
+    const cube = warmDemoCube(5)
+    let source = null
+
+    function paintDefault() {
+      const width = 480
+      const height = 270
+      canvas.width = width
+      canvas.height = height
+      const image = ctx.createImageData(width, height)
+      for (let y = 0; y < height; y += 1) {
+        for (let x = 0; x < width; x += 1) {
+          const i = (y * width + x) * 4
+          if (x < width / 2) {
+            const h = x / (width / 2)
+            const a = h * 6
+            const k = Math.floor(a)
+            const f = a - k
+            const p = 1 - 0.85
+            const q = 1 - f * 0.85
+            const t = 1 - (1 - f) * 0.85
+            const [r, g, b] = [
+              [1, t, p], [q, 1, p], [p, 1, t], [p, q, 1], [t, p, 1], [1, p, q]
+            ][k % 6]
+            image.data[i] = Math.round(r * 230)
+            image.data[i + 1] = Math.round(g * 230)
+            image.data[i + 2] = Math.round(b * 230)
+          } else {
+            const g = Math.round(((x - width / 2) / (width / 2)) * 255)
+            image.data[i] = g
+            image.data[i + 1] = g
+            image.data[i + 2] = g
+          }
+          image.data[i + 3] = 255
+        }
+      }
+      source = image
+      redraw()
+    }
+
+    function redraw() {
+      if (!source) return
+      const intensity = Number(document.getElementById('intensity').value)
+      document.getElementById('iv').textContent = intensity.toFixed(2)
+      const out = applyCubeToRgba8(cube, source.data, intensity)
+      const image = new ImageData(new Uint8ClampedArray(out), source.width, source.height)
+      canvas.width = source.width
+      canvas.height = source.height
+      ctx.putImageData(image, 0, 0)
+    }
+
+    document.getElementById('image').addEventListener('change', async (event) => {
+      const file = event.target.files?.[0]
+      if (!file) return
+      const bitmap = await createImageBitmap(file)
+      const scale = Math.min(1, 720 / bitmap.width)
+      const width = Math.round(bitmap.width * scale)
+      const height = Math.round(bitmap.height * scale)
+      const off = new OffscreenCanvas(width, height)
+      const octx = off.getContext('2d')
+      octx.drawImage(bitmap, 0, 0, width, height)
+      source = octx.getImageData(0, 0, width, height)
+      redraw()
+    })
+    document.getElementById('intensity').addEventListener('input', redraw)
+    paintDefault()
+  </script>
+</body>
+</html>

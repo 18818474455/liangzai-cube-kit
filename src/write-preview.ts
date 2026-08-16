@@ -48,5 +48,7 @@ const output = {
   pixels: applyCubeToRgba8(warmDemoCube(5), input.pixels, 0.8)
 }
 mkdirSync(join(root, 'docs'), { recursive: true })
+writePng(join(root, 'docs', 'input.png'), input)
+writePng(join(root, 'docs', 'output.png'), output)
 writePng(join(root, 'docs', 'before-after.png'), stitchHorizontal(input, output))
-console.log('wrote docs/before-after.png')
+console.log('wrote docs/input.png docs/output.png docs/before-after.png')

@@ -1,61 +1,51 @@
 # liangzai-cube-kit
 
-[![CI](https://github.com/18818474455/liangzai-cube-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/18818474455/liangzai-cube-kit/actions/workflows/ci.yml)
+**标准 Adobe `.cube` 3D LUT 读写与三线性插值。**  
+给开发者用的开源调色零件：一行命令套 LUT，一行代码读表、混合、写回。
+
 [![npm](https://img.shields.io/npm/v/liangzai-cube-kit.svg)](https://www.npmjs.com/package/liangzai-cube-kit)
 [![license](https://img.shields.io/github/license/18818474455/liangzai-cube-kit.svg)](./LICENSE)
+[![CI](https://github.com/18818474455/liangzai-cube-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/18818474455/liangzai-cube-kit/actions/workflows/ci.yml)
 
-从云享传靓仔管线中抽出的标准 `.cube` 工具，MIT 授权。
+[在线试跑](https://18818474455.github.io/liangzai-cube-kit/) · [npm](https://www.npmjs.com/package/liangzai-cube-kit)
 
-解析 Adobe 3D / 1D LUT，并提供教科书级曝光（`rgb × 2^ev`）与色温（Kelvin → RGB 增益）。零运行时依赖，可直接 `import`。
+![Warm demo LUT before / after](docs/before-after.gif)
 
-![Warm demo LUT before / after](docs/before-after.png)
+从云享传靓仔管线中抽出的标准 LUT 工具，MIT 授权。
 
-## Install
+## Quick Start
 
 ```bash
 npm install liangzai-cube-kit
 ```
 
 ```ts
-import {
-  parseCube,
-  applyCubeToRgba8,
-  applyBasicGradeToRgba8,
-  cubeMetadata
-} from 'liangzai-cube-kit'
+import { parseCube, applyCubeToRgba8 } from 'liangzai-cube-kit'
 
-const graded = applyBasicGradeToRgba8(rgba8, { ev: 0.3, kelvin: 5200 })
-const cube = parseCube(cubeText)
-const pixels = applyCubeToRgba8(cube, graded, 0.8)
-console.log(cubeMetadata(cube))
+const pixels = applyCubeToRgba8(parseCube(cubeText), rgba8, 0.8)
 ```
-
-## API
-
-| 函数 | 作用 |
-|------|------|
-| `parseCube` / `stringifyCube` | 3D `.cube` |
-| `parseCube1D` / `stringifyCube1D` | 1D `.cube` |
-| `sampleCube` / `mixSample` | 单像素采样与强度混合 |
-| `applyCubeToRgba8` | 整帧 RGBA8 |
-| `cubeMetadata` | 导出 title / size / domain / 点数 |
-| `identityCube` / `warmDemoCube` | 测试与演示格 |
-| `applyExposure` / `applyColorTemperature` | 单像素 EV / Kelvin |
-| `applyBasicGradeToRgba8` | 整帧曝光 + 色温 |
-
-超出 domain 的采样钳到端点；`intensity` 超出 0–1 时钳制。
-
-## Demo
 
 ```bash
-npm install
-npm test
-npm start -- --ev 0.3 --kelvin 5200
+npm start
 ```
 
-浏览器演示：`npm run build` 后用静态服务器打开 `docs/demo.html`。
+会写出 `out/input.png` 和 `out/output.png`。上面的 GIF 就是这组色条套暖调演示格的结果。
 
-我们怎么把现场修图做成桌面软件： [docs/shipping-a-desktop-retoucher.md](docs/shipping-a-desktop-retoucher.md)
+## 功能
+
+- 读 Adobe `.cube` 3D LUT（红 → 绿 → 蓝）
+- 三线性插值 + 强度混合：`out = in + (lut(in) − in) × t`
+- 序列化回 `.cube`；另有 1D LUT 与教科书级曝光 / 色温
+- 自带暖调演示格，`npm start` 即出前后对比
+- 浏览器 playground：拖图、拖强度，不用装桌面软件
+
+## Playground
+
+https://18818474455.github.io/liangzai-cube-kit/
+
+## 文档
+
+现场桌面修图怎么打包、签名、把像素留在本机：[shipping-a-desktop-retoucher.md](docs/shipping-a-desktop-retoucher.md)
 
 ## License
 

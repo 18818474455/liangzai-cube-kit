@@ -45,6 +45,7 @@
     "test": "tsx --test src/*.test.ts",
     "start": "tsx src/cli.ts",
     "preview": "tsx src/write-preview.ts",
+    "preview:gif": "tsx src/write-preview.ts && ffmpeg -y -loop 1 -t 1.4 -i docs/input.png -loop 1 -t 1.4 -i docs/output.png -filter_complex \"[0][1]xfade=transition=fade:duration=0.55:offset=0.85,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\" -loop 0 docs/before-after.gif",
     "prepublishOnly": "npm test && npm run build"
   },
   "devDependencies": {
