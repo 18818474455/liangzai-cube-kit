@@ -1,7 +1,7 @@
 {
   "name": "liangzai-cube-kit",
-  "version": "0.1.0",
-  "description": "Adobe .cube 3D/1D LUT parser and linear mixer, extracted from 云享传靓仔. MIT.",
+  "version": "0.2.0",
+  "description": "Adobe .cube LUT plus textbook exposure/Kelvin, extracted from 云享传靓仔. MIT.",
   "license": "MIT",
   "author": "长沙粤北偏北传媒有限公司",
   "homepage": "https://github.com/18818474455/liangzai-cube-kit#readme",
@@ -19,7 +19,10 @@
     "1d-lut",
     "adobe-cube",
     "color",
-    "color-grading"
+    "color-grading",
+    "exposure",
+    "kelvin",
+    "white-balance"
   ],
   "type": "module",
   "sideEffects": false,
@@ -39,7 +42,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test src/cube.test.ts",
+    "test": "tsx --test src/*.test.ts",
     "start": "tsx src/cli.ts",
     "preview": "tsx src/write-preview.ts",
     "prepublishOnly": "npm test && npm run build"

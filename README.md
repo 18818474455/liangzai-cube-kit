@@ -6,7 +6,7 @@
 
 从云享传靓仔管线中抽出的标准 `.cube` 工具，MIT 授权。
 
-解析 Adobe 3D / 1D LUT，按 `out = in + (lut(in) − in) * t` 做线性混合。零运行时依赖，可直接 `import`。
+解析 Adobe 3D / 1D LUT，并提供教科书级曝光（`rgb × 2^ev`）与色温（Kelvin → RGB 增益）。零运行时依赖，可直接 `import`。
 
 ![Warm demo LUT before / after](docs/before-after.png)
 
@@ -17,10 +17,16 @@ npm install liangzai-cube-kit
 ```
 
 ```ts
-import { parseCube, applyCubeToRgba8, cubeMetadata } from 'liangzai-cube-kit'
+import {
+  parseCube,
+  applyCubeToRgba8,
+  applyBasicGradeToRgba8,
+  cubeMetadata
+} from 'liangzai-cube-kit'
 
+const graded = applyBasicGradeToRgba8(rgba8, { ev: 0.3, kelvin: 5200 })
 const cube = parseCube(cubeText)
-const pixels = applyCubeToRgba8(cube, rgba8, 0.8)
+const pixels = applyCubeToRgba8(cube, graded, 0.8)
 console.log(cubeMetadata(cube))
 ```
 
@@ -34,6 +40,8 @@ console.log(cubeMetadata(cube))
 | `applyCubeToRgba8` | 整帧 RGBA8 |
 | `cubeMetadata` | 导出 title / size / domain / 点数 |
 | `identityCube` / `warmDemoCube` | 测试与演示格 |
+| `applyExposure` / `applyColorTemperature` | 单像素 EV / Kelvin |
+| `applyBasicGradeToRgba8` | 整帧曝光 + 色温 |
 
 超出 domain 的采样钳到端点；`intensity` 超出 0–1 时钳制。
 
@@ -42,7 +50,7 @@ console.log(cubeMetadata(cube))
 ```bash
 npm install
 npm test
-npm start
+npm start -- --ev 0.3 --kelvin 5200
 ```
 
 浏览器演示：`npm run build` 后用静态服务器打开 `docs/demo.html`。

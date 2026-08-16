@@ -18,5 +18,13 @@ export {
   stringifyCube1D,
   warmDemoCube
 } from './cube'
+export {
+  applyBasicGradeToRgba8,
+  applyColorTemperature,
+  applyExposure,
+  clampKelvin,
+  kelvinToRgb,
+  kelvinToRgbGain
+} from './basic-color'
 
 export type { Cube, Cube1D, Cube3D, CubeMetadata, Rgb } from './cube'
