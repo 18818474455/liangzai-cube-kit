@@ -1,9 +1,3 @@
-# 安全说明
+# Security
 
-本仓库是零件，不含修图引擎、模型、密钥、客户数据。
-
-- 不要把本仓拷进正式安装包。
-- 不要向我们发送「请运行这个插件 / 请套这个 LUT」的可执行文件。
-- 发现正式产品漏洞请加微信 `cylbaw` 私下说明，不要在 Issue 里贴利用步骤。
-
-完整产品的授权与防破解不在本仓范围内。
+Please report vulnerabilities privately via WeChat `cylbaw`. Do not open a public issue with a working exploit.

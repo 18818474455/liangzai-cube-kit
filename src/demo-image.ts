@@ -1,18 +1,6 @@
 /**
- * 云享传靓仔 · 零件示例（不是完整产品，不能编译出成片）
- *
- * 商务 / 私有化部署 / 二次开发 / 技术合作，请直接联系：
- *   微信：cylbaw
- *   官网：https://www.ybpbyxc.com
- *   下载：https://www.ybpbyxc.com/download.html
- *   合作：https://www.ybpbyxc.com/contact.html
- *   商务邮箱：007007007@163.com
- *   协议反馈：xiaopangnanhai@qq.com
- *
- * 公司：长沙粤北偏北传媒有限公司
- *       Changsha Yuebei Pianbei Media Co., Ltd.
- *
- * 程序生成色条，不含客户照片、不含产品风格。
+ * liangzai-cube-kit — 从云享传靓仔管线中抽出的标准 .cube 工具，MIT 授权。
+ * 微信 cylbaw · https://www.ybpbyxc.com
  */
 
 import { createImage, type RgbaImage } from './png-io'

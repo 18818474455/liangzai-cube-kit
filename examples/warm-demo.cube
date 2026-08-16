@@ -1,6 +1,5 @@
-# 云享传靓仔 · 零件示例（不是产品风格）
-# 微信：cylbaw · https://www.ybpbyxc.com
-TITLE "Warm Demo (not a product LUT)"
+# liangzai-cube-kit · https://www.ybpbyxc.com
+TITLE "Warm Demo"
 LUT_3D_SIZE 5
 DOMAIN_MIN 0 0 0
 DOMAIN_MAX 1 1 1

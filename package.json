@@ -1,23 +1,53 @@
 {
   "name": "liangzai-cube-kit",
   "version": "0.1.0",
-  "private": true,
-  "description": "标准 Adobe .cube 读写与线性混合。云享传靓仔零件，不是完整产品。商务微信 cylbaw。",
+  "description": "Adobe .cube 3D/1D LUT parser and linear mixer, extracted from 云享传靓仔. MIT.",
   "license": "MIT",
   "author": "长沙粤北偏北传媒有限公司",
-  "homepage": "https://www.ybpbyxc.com",
-  "type": "module",
-  "scripts": {
-    "start": "npx --yes tsx src/cli.ts",
-    "test": "npx --yes tsx --test src/cube.test.ts",
-    "typecheck": "tsc --noEmit"
+  "homepage": "https://github.com/18818474455/liangzai-cube-kit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/18818474455/liangzai-cube-kit.git"
   },
-  "dependencies": {
-    "pngjs": "^7.0.0"
+  "bugs": {
+    "url": "https://github.com/18818474455/liangzai-cube-kit/issues"
+  },
+  "keywords": [
+    "cube",
+    "lut",
+    "3d-lut",
+    "1d-lut",
+    "adobe-cube",
+    "color",
+    "color-grading"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/cube.test.ts",
+    "start": "tsx src/cli.ts",
+    "preview": "tsx src/write-preview.ts",
+    "prepublishOnly": "npm test && npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.19.1",
     "@types/pngjs": "^6.0.5",
+    "pngjs": "^7.0.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.3"
   }
