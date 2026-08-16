@@ -42,8 +42,9 @@ const graded = applyBasicGradeToRgba8(rgba8, { ev: 0.3, kelvin: 5200 })
 
 | 你在找 | 这里有 |
 |--------|--------|
-| `.cube LUT` 怎么读、怎么写 | `parseCube` / `stringifyCube` |
+| `.cube LUT` 怎么读、怎么写 | `parseCube` / `stringifyCube`（`src/cube.ts`） |
 | `3D LUT 颜色查找表` 怎么套到像素 | `applyCubeToRgba8`（三线性插值 + 强度混合） |
+| 教科书级曝光 / 色温 | `applyExposure` / `applyColorTemperature` / `applyBasicGradeToRgba8`（`src/basic-color.ts`） |
 | `批量套 LUT` / 滤镜预览 | CLI `npm start`，或自己循环读图 |
 | `开源调色库` 里能直接 import 的零件 | npm：`liangzai-cube-kit` |
 
