@@ -55,6 +55,8 @@ npm start -- --ev 0.3 --kelvin 5200
 
 浏览器演示：`npm run build` 后用静态服务器打开 `docs/demo.html`。
 
+我们怎么把现场修图做成桌面软件： [docs/shipping-a-desktop-retoucher.md](docs/shipping-a-desktop-retoucher.md)
+
 ## License
 
 MIT © 长沙粤北偏北传媒有限公司
