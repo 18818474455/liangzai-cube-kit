@@ -56,11 +56,13 @@ const graded = applyBasicGradeToRgba8(rgba8, { ev: 0.3, kelvin: 5200 })
 - 三线性插值 + 强度混合
 - 序列化回 `.cube`；另有 1D LUT
 - 教科书级曝光（`rgb × 2^ev`）与 Kelvin 色温增益
-- 浏览器 playground：拖图、拖强度，不用装桌面软件
+- 浏览器 playground：传自己的图和自己的 `.cube`，拖强度，不用装桌面软件
 
 ## Playground
 
 https://18818474455.github.io/liangzai-cube-kit/
+
+选一张自己的图，也可以换成自己的 `.cube`（3D 或 1D 都能读）。解析出的 size、结点数与 `DOMAIN` 会显示在画布上方，`DOMAIN` 不是 0→1 时会标出来。
 
 ## 相关仓库
 
