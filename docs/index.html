@@ -27,16 +27,24 @@
       display: block;
     }
     input[type="range"] { width: 180px; }
+    .meta {
+      font-size: 0.85rem;
+      margin: 0 0 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .meta.bad { color: #ff9d8a; }
   </style>
 </head>
 <body>
   <main>
     <h1>liangzai-cube-kit</h1>
-    <p>开源 Adobe <code>.cube</code> LUT：3D LUT 颜色查找表 + 三线性插值。拖一张图进来看「LUT 怎么用」。从云享传靓仔抽出，MIT；产品见 <a href="https://github.com/18818474455/liangzai">云享传靓仔 · 活动摄影修图美颜软件</a>。</p>
+    <p>开源 Adobe <code>.cube</code> LUT：3D LUT 颜色查找表 + 三线性插值。选一张自己的图，也可以换成自己的 <code>.cube</code>（3D 或 1D 都能读），解析出的 size 与 <code>DOMAIN</code> 会显示在下面。从云享传靓仔抽出，MIT；产品见 <a href="https://github.com/18818474455/liangzai">云享传靓仔 · 活动摄影修图美颜软件</a>。</p>
     <div class="row">
       <label>图片 <input id="image" type="file" accept="image/*"></label>
+      <label>LUT <input id="lut" type="file" accept=".cube,text/plain"></label>
       <label>强度 <input id="intensity" type="range" min="0" max="1" step="0.01" value="0.8"> <span id="iv">0.80</span></label>
     </div>
+    <p class="meta" id="lutinfo"></p>
     <canvas id="view" width="480" height="270"></canvas>
     <p>
       <a href="https://www.npmjs.com/package/liangzai-cube-kit">npm</a>
@@ -46,11 +54,19 @@
     </p>
   </main>
   <script type="module">
-    import { applyCubeToRgba8, warmDemoCube } from 'https://esm.sh/liangzai-cube-kit@0.2.0'
+    import {
+      applyCube1DToRgba8,
+      applyCubeToRgba8,
+      cubeMetadata,
+      parseCube,
+      parseCube1D,
+      warmDemoCube
+    } from 'https://esm.sh/liangzai-cube-kit@0.2.0'
 
     const canvas = document.getElementById('view')
     const ctx = canvas.getContext('2d', { willReadFrequently: true })
-    const cube = warmDemoCube(5)
+    const info = document.getElementById('lutinfo')
+    let cube = warmDemoCube(5)
     let source = null
 
     function paintDefault() {
@@ -93,11 +109,41 @@
       if (!source) return
       const intensity = Number(document.getElementById('intensity').value)
       document.getElementById('iv').textContent = intensity.toFixed(2)
-      const out = applyCubeToRgba8(cube, source.data, intensity)
+      const out = cube.kind === '1d'
+        ? applyCube1DToRgba8(cube, source.data, intensity)
+        : applyCubeToRgba8(cube, source.data, intensity)
       const image = new ImageData(new Uint8ClampedArray(out), source.width, source.height)
       canvas.width = source.width
       canvas.height = source.height
       ctx.putImageData(image, 0, 0)
+    }
+
+    function describe(origin) {
+      const meta = cubeMetadata(cube)
+      const axis = (v) => v.map((n) => Number(n.toFixed(4))).join(' ')
+      const uniform =
+        meta.domainMin.every((n) => n === 0) && meta.domainMax.every((n) => n === 1)
+      info.className = 'meta'
+      info.textContent =
+        `${origin}：${meta.title} · ${meta.kind.toUpperCase()} · size ${meta.size}` +
+        ` · ${meta.sampleCount} 个结点 · DOMAIN ${axis(meta.domainMin)} → ${axis(meta.domainMax)}` +
+        (uniform ? '' : '（非均匀 DOMAIN）')
+    }
+
+    function loadCubeText(text, name) {
+      try {
+        cube = parseCube(text)
+      } catch (error3d) {
+        try {
+          cube = parseCube1D(text)
+        } catch (error1d) {
+          info.className = 'meta bad'
+          info.textContent = `${name} 读不了：${error3d.message}；按 1D 再试也失败：${error1d.message}`
+          return
+        }
+      }
+      describe(name)
+      redraw()
     }
 
     document.getElementById('image').addEventListener('change', async (event) => {
@@ -113,7 +159,13 @@
       source = octx.getImageData(0, 0, width, height)
       redraw()
     })
+    document.getElementById('lut').addEventListener('change', async (event) => {
+      const file = event.target.files?.[0]
+      if (!file) return
+      loadCubeText(await file.text(), file.name)
+    })
     document.getElementById('intensity').addEventListener('input', redraw)
+    describe('内置演示 LUT')
     paintDefault()
   </script>
 </body>
